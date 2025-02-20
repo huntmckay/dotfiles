@@ -1,7 +1,5 @@
 git config --global user.name "Hunter McKay"
 git config --global user.email "huntmckay@gmail.com"
-git config --global user.signingkey CC120D6501B3BD9480E5A113AEDD727A3D406627
-git config --global commit.gpgsign true
 git config --global alias.co checkout
 git config --global alias.br branch
 git config --global alias.ci commit

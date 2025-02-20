@@ -3,3 +3,4 @@ vim
 tree
 bpython
 stow
+tmux

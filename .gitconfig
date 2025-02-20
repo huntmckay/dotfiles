@@ -3,7 +3,7 @@
 	name = Hunter McKay
 	signingkey = CC120D6501B3BD9480E5A113AEDD727A3D406627
 [commit]
-	gpgsign = true
+	gpgsign = false
 [alias]
 	co = checkout
 	br = branch
