@@ -1,0 +1,35 @@
+Host cvte
+	Hostname 10.50.147.188
+	User cvte
+Host cctc
+	Hostname 10.50.11.34
+	User student
+	ProxyJump cvte
+Host adm
+	Hostname 10.10.0.2
+	User andy.dwyer
+	ProxyJump cctc
+Host dc
+	Hostname 10.10.0.10
+	User andy.dwyer
+	ProxyJump adm
+Host fs
+	Hostname 10.10.0.3
+	User andy.dwyer
+	ProxyJump adm
+Host ws2
+	Hostname 10.10.0.4
+	User andy.dwyer
+	ProxyJump adm
+Host ws1
+	Hostname 10.10.0.5
+	User student
+	ProxyJump RDP
+Host terra
+	Hostname 10.10.0.6
+	User garviel #luna
+	ProxyJump adm
+Host mt
+	Hostname 10.10.0.7
+	User bombadil #jolly
+	ProxyJump adm
