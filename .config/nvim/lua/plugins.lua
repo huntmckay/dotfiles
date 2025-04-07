@@ -28,25 +28,29 @@ return {
   {
     "numToStr/Comment.nvim",
     config = function()
-      require("Comment").setup({
+      local comment = require("Comment")
+      comment.setup({
         toggler = {
-          line = "<leader>c",   -- Line comment toggle
-          block = "<leader>C",  -- Block comment toggle
+          line = "<leader>cc",
+          block = "<leader>CC",
         },
         opleader = {
-          line = "<leader>c",   -- Visual mode line toggle
-          block = "<leader>C",  -- Visual mode block toggle
+          line = "<leader>cc",
+          block = "<leader>CC",
+        },
+        extra = {
+          above = "<leader>cO",
+          below = nil,
+          eol = "<leader>cA",
         },
         mappings = {
           basic = true,
-          extra = false,
+          extra = true,
         },
       })
-      -- Custom remaps for "extra" comment features not sure if work
-      vim.keymap.set("n", "<leader>co", api.comment_linewise_above, { desc = "Comment above", noremap = true })
-      vim.keymap.set("n", "<leader>ca", api.comment_linewise_current, { desc = "Comment end of line", noremap = true })
     end,
   },
+
   { "lukas-reineke/indent-blankline.nvim" },
   { "echasnovski/mini.surround" },
 }
