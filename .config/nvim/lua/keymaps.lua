@@ -84,3 +84,13 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 -- autocmd FileType yml setlocal ts=2 sts=2 sw=2 expandtab
 -- autocmd FileType lua setlocal ts=2 sts=2 sw=2 expandtab
 -- set autowrite
+--
+local themes = { "tokyonight", "onedarkpro", "rose-pine" }
+local index = 1
+
+vim.keymap.set("n", "<leader>ut", function()
+  index = index % #themes + 1
+  vim.cmd("colorscheme " .. themes[index])
+  print("Theme: " .. themes[index])
+end, { desc = "Toggle UI Theme", noremap = true, silent = true })
+

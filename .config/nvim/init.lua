@@ -28,3 +28,4 @@ vim.opt.rtp:prepend(lazypath)      -- Add lazy.nvim to runtime path so it loads
 require("lazy").setup("plugins")   -- Load your plugin list from lua/plugins.lua
 require("keymaps")
 require("autocmds")
+require("ui")
