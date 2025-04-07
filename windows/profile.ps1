@@ -43,3 +43,7 @@ set-alias "s" -Value "get-childitem"
 set-alias "unzip" -Value "Expand-Archive"
 set-alias "edit-ssh" -Value "e $HOME\.ssh\config"
 set-alias "git" -Value "$ROME\$GIT\git.exe"
+
+
+
+$sid = [System.Security.Principal.WindowsIdentity]::GetCurrent().User.Value
