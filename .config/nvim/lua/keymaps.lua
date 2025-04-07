@@ -36,8 +36,13 @@ vim.keymap.set("n", "<leader>a", "term<CR>A") --insert at end
 vim.keymap.set("n", "<leader>s", "term<CR>I") --insert at beginning
 
 -- Telescope (if installed)
-map("n", "<leader>ff", "<cmd>Telescope find_files<cr>", opts)
-map("n", "<leader>fg", "<cmd>Telescope live_grep<cr>", opts)
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+map("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
+map("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", opts)
+map("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
+map("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
 
 -- line numbers
 vim.opt.number = true
