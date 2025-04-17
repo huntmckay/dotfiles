@@ -17,7 +17,7 @@ alias a='ls -lA'
 alias f='fg'
 alias g='git'
 alias gc='git -C'
-alias h='man'
+alias h='history | fzf -e'
 alias i='invoke'
 # alias functions
 alias m='make'

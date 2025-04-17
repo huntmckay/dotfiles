@@ -12,7 +12,7 @@ vim.opt.clipboard = "unnamedplus"  -- Use system clipboard for yanking and pasti
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"  
 -- Define where lazy.nvim should be installed (~/.local/share/nvim/lazy/lazy.nvim)
 
-if not vim.loop.fs_stat(lazypath) then  
+if not vim.loop.fs_stat(lazypath) then
   -- If lazy.nvim doesn't exist, clone it from GitHub
   vim.fn.system({
     "git",
@@ -25,7 +25,9 @@ end
 
 vim.opt.rtp:prepend(lazypath)      -- Add lazy.nvim to runtime path so it loads
 
-require("lazy").setup("plugins")   -- Load your plugin list from lua/plugins.lua
+require("lazy").setup(
+  "plugins", {checker = { enabled = true, notify = false}}
+)
 require("keymaps")
 require("autocmds")
 require("ui")

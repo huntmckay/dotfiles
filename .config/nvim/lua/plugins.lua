@@ -53,4 +53,6 @@ return {
 
   { "lukas-reineke/indent-blankline.nvim" },
   { "echasnovski/mini.surround" },
+  { "folke/which-key.nvim" },
+  { "indent-blankline.nvim" },
 }
