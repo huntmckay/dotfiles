@@ -4,6 +4,7 @@ tree
 bpython
 stow
 tmux
+fzf # better history
 # deno2
 curl -fsSL https://deno.land/install.sh | sh
 deno --version
@@ -13,3 +14,4 @@ tldr --update
 mkdir -p ~/.local/opt/
 mv ~/Downloads/nvim-linux64 ~/.local/opt/nvim
 sudo ln -sf ~/.local/opt/nvim/bin/nvim /usr/local/bin/nvim
+

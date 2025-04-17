@@ -1,0 +1,15 @@
+#!/bin/bash
+
+PKCS_MODULE="/usr/lib/x86_64-linux-gnu/pkcs11/opensc-pkcs11.so"
+
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    eval "$(ssh-agent -s)"
+    echo $SSH_AGENT_PID
+fi
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.* -user "$USER" 2>/dev/null | head -n 1)
+fi
+
+ssh-add -ef "$PKCS_MODULE"
+ssh-add -s "$PKCS_MODULE"
