@@ -8,6 +8,9 @@ vim.opt.autowrite = true
 -- overrides for 2-space indent
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "yaml", "yml", "json", "lua", "markdown" },
+  callback = function()
+    vim.cmd("colorscheme onedark")
+  end,
   callback = function(event)
     local ft = event.match
     local o = vim.opt_local
