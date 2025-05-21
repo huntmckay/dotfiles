@@ -9,22 +9,18 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # alias
-alias vim='nvim'
+alias vim='echo "Type e"'
 alias e='nvim'
-#alias ve='source .env/bin/activate'
 alias s='ls -CF'
-alias a='ls -lA'
+alias l='ls -lA'
 alias f='fg'
 alias g='git'
-alias gc='git -C'
+alias gc='git commit -m "$(curl -s https://whatthecommit.com/index.txt)"'
+alias ga='git add . && gc"'
 alias h='history | fzf -e'
 alias i='invoke'
-# alias functions
 alias m='make'
 alias p='python3'
 alias t='tree'
-alias r='rm'
 alias rf='rm -rf'
-alias rd='rmdir'
-alias rkde='kquitapp5 plasmashell && kstart5 plasmashell'
 alias dot='e ~/dotfiles/.bashrc'
