@@ -1,0 +1,62 @@
+#!/bin/bash
+set -e
+
+DOTFILES_DIR=/home/hmckay/dotfiles
+
+link_file() {
+  local src=$1
+  local dest=$2
+  echo "Linking $src → $dest"
+  ln -sf "$DOTFILES_DIR/$src" "$dest"
+}
+
+unlink_file() {
+  local dest=$1
+  echo "Unlinking $dest"
+  rm -f "$dest"
+}
+
+link_user_config() {
+  echo "Linking user configs..."
+  link_file config/nvim ~/.config/nvim
+  link_file config/waybar ~/.config/waybar
+  link_file config/wezterm ~/.config/wezterm
+  link_file bashrc ~/.bashrc
+  link_file bash_aliases ~/.bash_aliases
+}
+
+unlink_user_config() {
+  echo "Unlinking user configs..."
+  unlink_file ~/.config/nvim
+  unlink_file ~/.config/waybar
+  unlink_file ~/.bashrc
+  unlink_file ~/.bash_aliases
+  unlink_file ~/.wezterm.lua
+}
+
+link_root_config() {
+  echo "Linking root configs..."
+  sudo ln -sf "$DOTFILES_DIR/config/nvim" /root/.config/nvim
+  sudo ln -sf "$DOTFILES_DIR/root/.bashrc" /root/.bashrc
+}
+
+unlink_root_config() {
+  echo "Unlinking root configs..."
+  sudo rm -f /root/.config/nvim
+  sudo rm -f /root/.bashrc
+}
+
+case "$1" in
+  link)
+    link_user_config
+    link_root_config
+    ;;
+  unlink)
+    unlink_user_config
+    unlink_root_config
+    ;;
+  *)
+    echo "Usage: $0 {link|unlink}"
+    exit 1
+    ;;
+esac
