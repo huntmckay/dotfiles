@@ -91,6 +91,8 @@ fi
 #flatpak path
 export PATH="$HOME/.local/opt/nvim/bin:$PATH"
 export PATH="$HOME/.local/opt/bin:$PATH"
+export PATH="$PATH:$HOME/Applications"
 
-# vim as manpager
-export MANPAGER='nvim +Man!'
+# git stuff
+git config --global alias.s status
+git config --global alias.l log

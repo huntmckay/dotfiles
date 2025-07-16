@@ -15,7 +15,6 @@ alias s='ls -CF'
 alias l='ls -lA'
 alias f='fg'
 alias g='git'
-alias gc='git commit -m "$(curl -s https://whatthecommit.com/index.txt)"'
 alias ga='git add . && gc"'
 alias h='history | fzf -e'
 alias i='invoke'
@@ -23,4 +22,9 @@ alias m='make'
 alias p='python3'
 alias t='tree'
 alias rf='rm -rf'
-alias dot='e ~/dotfiles/.bashrc'
+alias dot='e ~/dotfiles/bashrc'
+
+alias xx='cp ~/dotfiles/bashrc ~/.bashrc; cp ~/dotfiles/bash_aliases ~/.bash_aliases'
+
+alias ss='source ~/.bashrc'
+# make a function here that cps bashrc and sources
