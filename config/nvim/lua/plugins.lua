@@ -1,30 +1,30 @@
 return {
   {
-    "folke/tokyonight.nvim",
-    name = "tokyonight",
-    priority = 1000,
-  },
-  {
     "navarasu/onedark.nvim",
-    name = "onedark",
     priority = 1000,
-  },
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    priority = 1000,
+    config = function()
+      require("onedark").setup({
+        style = "cool",
+        options = { transparency = false }
+      })
+      vim.cmd.colorscheme("onedark")
+    end
   },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    opts = {
+      ensure_installed = { "lua", "markdown", "python", "json", "yaml", "bash", "vim", "toml", "html", "typescript" },
+      highlight = { enable = true },
+      indent = { enable = true },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
   { "nvim-lua/plenary.nvim" },
   { "nvim-telescope/telescope.nvim" },
-  {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    config = false, -- we configure it manually in ui.lua
-  },
+  { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
   {
     "numToStr/Comment.nvim",
     config = function()
@@ -50,9 +50,8 @@ return {
       })
     end,
   },
-
   { "lukas-reineke/indent-blankline.nvim" },
   { "echasnovski/mini.surround" },
   { "folke/which-key.nvim" },
-  { "indent-blankline.nvim" },
+  { "kevinhwang91/nvim-ufo", dependencies = "kevinhwang91/promise-async" },
 }

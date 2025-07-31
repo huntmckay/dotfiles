@@ -1,38 +1,29 @@
--- Global indentation and behavior
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.autowrite = true
 
--- overrides for 2-space indent
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "yaml", "yml", "json", "lua", "markdown" },
-  callback = function()
-    vim.cmd("colorscheme onedark")
-  end,
   callback = function(event)
-    local ft = event.match
     local o = vim.opt_local
-
-    -- Use 2-space indent
     o.tabstop = 2
     o.shiftwidth = 2
     o.softtabstop = 2
     o.expandtab = true
 
-    if ft == "markdown" then
+    if event.match == "markdown" then
       o.spell = true
       o.wrap = true
-    elseif ft == "lua" then
+    elseif event.match == "lua" then
       o.textwidth = 120
     end
   end,
 })
 
--- PowerShell-specific override
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "ps1" },
+  pattern = "ps1",
   callback = function()
     local o = vim.opt_local
     o.tabstop = 4
@@ -43,9 +34,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Python-specific override
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "python" },
+  pattern = "python",
   callback = function()
     local o = vim.opt_local
     o.tabstop = 4
