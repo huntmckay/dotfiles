@@ -27,7 +27,6 @@ return {
       scroll = { enabled = true },
       statuscolumn = { enabled = true },
       words = { enabled = true },
-      zen = { enabled = true },      -- zen mode (toggle with <leader>z)
       git = { enabled = true },      -- git integration (pickers, lazygit, etc.)
       styles = {
         notification = {
@@ -63,8 +62,6 @@ return {
       { "<leader>n", function() Snacks.notifier.show_history() end, desc = "Notification History" },
     },
   },
-
-  -- Keep any non-overlapping plugins you use, e.g.:
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
   { "numToStr/Comment.nvim",
     config = function()
@@ -90,6 +87,26 @@ return {
       })
     end,
   },
+  -- Git Tools
+  { "lewis6991/gitsigns.nvim", opts = {} },
+  -- Inline signs + per-hunk actions
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+      "folke/snacks.nvim",
+    },
+    config = function()
+      require("neogit").setup({
+        disable_commit_confirmation = true,
+        integrations = { diffview = true },
+        kind = "split",
+        -- kind = "split", -- or "tab"/"auto" — pick the layout you like
+      })
+    end,
+  },
+
   { "lukas-reineke/indent-blankline.nvim" },
   { "echasnovski/mini.surround" },
   { "folke/which-key.nvim" },
