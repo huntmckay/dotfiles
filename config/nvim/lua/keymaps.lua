@@ -80,14 +80,83 @@ vim.keymap.set("n", "<leader>gc", "<cmd>Neogit commit<cr>", { desc = "Commit" })
 vim.keymap.set("n", "<leader>gp", "<cmd>Neogit push<cr>", { desc = "Push" })
 vim.keymap.set("n", "<leader>gl", "<cmd>Neogit log<cr>", { desc = "Log" })
 
--- Notes
-vim.keymap.set("n", "<leader>nn", ":e ~/notes/daily_log.md")
+-- === Notes workflow ===
+local NOTES_DIR   = "~/notes"
+local JOURNAL_MD  = NOTES_DIR .. "/journal.md"
+
+-- tiny helpers
+local function expand(p) return vim.fn.expand(p) end
+local function ensure_dir(path) vim.fn.mkdir(vim.fn.fnamemodify(path, ":h"), "p") end
+
+-- daily-log: today's header at top
+local function today_header() return os.date("%Y-%m-%d — %A") end
+local function ensure_today_top(bufnr)
+  bufnr = bufnr or 0
+  local hdr = today_header()
+  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  local idx
+  for i, l in ipairs(lines) do
+    if l:match("^##%s+" .. vim.pesc(hdr) .. "%s*$") then idx = i; break end
+  end
+  if idx then
+    vim.api.nvim_win_set_cursor(0, { idx + 1, 0 })
+    return
+  end
+  vim.api.nvim_buf_set_lines(bufnr, 0, 0, false, { "## " .. hdr, "" })
+  vim.api.nvim_win_set_cursor(0, { 2, 0 })
+end
+
+-- <leader>dl → open daily log (journal) and ensure today at top
+vim.keymap.set("n", "<leader>dl", function()
+  local path = expand(JOURNAL_MD)
+  ensure_dir(path)
+  vim.cmd.edit(vim.fn.fnameescape(path))
+  ensure_today_top(0)
+end, { desc = "Daily Log (today at top)" })
+
+-- <leader>fn → fuzzy-find a note in ~/notes
 vim.keymap.set("n", "<leader>fn", function()
-  Snacks.picker.find({ cmd = "~/notes" })
-end, { desc = "Find in notes" })
+  local ok, Snacks = pcall(require, "snacks")
+  local cwd = expand(NOTES_DIR)
+  if ok and Snacks.picker and Snacks.picker.explorer then
+    Snacks.picker.explorer({ cwd = cwd, layout = "sidebar", on_show = function() vim.cmd.stopinsert() end })
+  elseif ok and Snacks.picker then
+    Snacks.picker.files({ cwd = cwd, on_show = function() vim.cmd.stopinsert() end })
+  end
+end, { desc = "Notes: find/open" })
+
+-- <leader>gn → grep/search inside ~/notes
 vim.keymap.set("n", "<leader>gn", function()
-  Snacks.picker.grep({ cmd = "~/notes" })
-end, { desc = "search notes" })
+  local ok, Snacks = pcall(require, "snacks")
+  local cwd = expand(NOTES_DIR)
+  if ok and Snacks.picker then
+    Snacks.picker.grep({ cwd = cwd, on_show = function() vim.cmd.stopinsert() end })
+end, { desc = "Notes: grep" })
+
+-- <leader>nn → create a new note (prompt title → slug → open)
+vim.keymap.set("n", "<leader>nn", function()
+  local title = vim.fn.input("New note title: ")
+  if title == nil or title == "" then return end
+  local slug = title
+    :gsub("[^%w%s%-]", "")  -- keep words/spaces/hyphens
+    :gsub("%s+", "-")
+    :lower()
+
+  local filename = slug
+  local path = expand(NOTES_DIR .. "/" .. filename)
+  ensure_dir(path)
+
+  -- create/open
+  vim.cmd.edit(vim.fn.fnameescape(path))
+
+  -- if empty, add a header
+  if vim.fn.line("$") == 1 and vim.fn.getline(1) == "" then
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, {
+      "# " .. title,
+      "",
+    })
+  end
+end, { desc = "Notes: new note" })
 
 -- Other options/settings (if you want)
 vim.cmd("syntax enable")
