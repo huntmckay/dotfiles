@@ -135,25 +135,27 @@ end, { desc = "Notes: grep" })
 -- <leader>nn → create a new note (prompt title → slug → open)
 vim.keymap.set("n", "<leader>nn", function()
   local title = vim.fn.input("New note title: ")
-  if title == nil or title == "" then return end
+  if not title or title == "" then return end
+
+  -- slugify the title
   local slug = title
-    :gsub("[^%w%s%-]", "")  -- keep words/spaces/hyphens
-    :gsub("%s+", "-")
+    :gsub("[^%w%s%-]", "")   -- keep words/spaces/hyphens
+    :gsub("%s+", "-")        -- spaces -> hyphens
     :lower()
 
-  local filename = slug
-  local path = expand(NOTES_DIR .. "/" .. filename)
-  ensure_dir(path)
+  -- ensure .md suffix
+  if not slug:match("%.md$") then
+    slug = slug .. ".md"
+  end
 
-  -- create/open
+  local path = string.format("%s/%s", vim.fn.expand("~/notes"), slug)
+
+  vim.fn.mkdir(vim.fn.fnamemodify(path, ":h"), "p")
   vim.cmd.edit(vim.fn.fnameescape(path))
 
   -- if empty, add a header
   if vim.fn.line("$") == 1 and vim.fn.getline(1) == "" then
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, {
-      "# " .. title,
-      "",
-    })
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, { "# " .. title, "" })
   end
 end, { desc = "Notes: new note" })
 
