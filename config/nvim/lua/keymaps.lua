@@ -80,6 +80,14 @@ vim.keymap.set("n", "<leader>gc", "<cmd>Neogit commit<cr>", { desc = "Commit" })
 vim.keymap.set("n", "<leader>gp", "<cmd>Neogit push<cr>", { desc = "Push" })
 vim.keymap.set("n", "<leader>gl", "<cmd>Neogit log<cr>", { desc = "Log" })
 
+-- Notes
+vim.keymap.set("n", "<leader>nn", ":e ~/notes/daily_log.md")
+vim.keymap.set("n", "<leader>fn", function()
+  Snacks.picker.find({ cmd = "~/notes" })
+end, { desc = "Find in notes" })
+vim.keymap.set("n", "<leader>gn", function()
+  Snacks.picker.grep({ cmd = "~/notes" })
+end, { desc = "search notes" })
 
 -- Other options/settings (if you want)
 vim.cmd("syntax enable")
