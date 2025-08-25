@@ -129,8 +129,7 @@ end, { desc = "Notes: find/open" })
 vim.keymap.set("n", "<leader>gn", function()
   local ok, Snacks = pcall(require, "snacks")
   local cwd = expand(NOTES_DIR)
-  if ok and Snacks.picker then
-    Snacks.picker.grep({ cwd = cwd, on_show = function() vim.cmd.stopinsert() end })
+  Snacks.picker.grep({ cwd = cwd, on_show = function() vim.cmd.stopinsert() end })
 end, { desc = "Notes: grep" })
 
 -- <leader>nn → create a new note (prompt title → slug → open)
