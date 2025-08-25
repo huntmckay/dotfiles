@@ -82,7 +82,7 @@ vim.keymap.set("n", "<leader>gl", "<cmd>Neogit log<cr>", { desc = "Log" })
 
 -- === Notes workflow ===
 local NOTES_DIR   = "~/notes"
-local JOURNAL_MD  = NOTES_DIR .. "/journal.md"
+local DAILY_LOG   = NOTES_DIR .. "/daily_log.md"
 
 -- tiny helpers
 local function expand(p) return vim.fn.expand(p) end
@@ -106,9 +106,9 @@ local function ensure_today_top(bufnr)
   vim.api.nvim_win_set_cursor(0, { 2, 0 })
 end
 
--- <leader>dl → open daily log (journal) and ensure today at top
+-- <leader>dl → open daily log and ensure today at top
 vim.keymap.set("n", "<leader>dl", function()
-  local path = expand(JOURNAL_MD)
+  local path = expand(DAILY_LOG)
   ensure_dir(path)
   vim.cmd.edit(vim.fn.fnameescape(path))
   ensure_today_top(0)
