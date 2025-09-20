@@ -46,3 +46,14 @@ vim.api.nvim_create_autocmd("FileType", {
     o.colorcolumn = "89"
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.keymap.set("n", "<leader>p", function()
+      -- Snacks users: this opens a floating terminal with glow preview of the current file
+      vim.cmd('terminal glow %')
+    end, { buffer = true, desc = "Markdown Preview (glow)" })
+  end,
+})
+
