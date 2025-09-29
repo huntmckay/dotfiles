@@ -1,0 +1,15 @@
+{
+  "work": {
+    "jira": "https://jira.company.com",
+    "confluence": "https://wiki.company.com"
+  },
+  "personal": {
+    "github": "https://github.com",
+    "gitlab": "https://gitlab.com",
+    "chatgpt": "https://chat.openai.com"
+  },
+  "homelab": {
+    "proxmox": "https://proxmox.home.lan",
+    "truenas": "https://truenas.home.lan"
+  }
+}

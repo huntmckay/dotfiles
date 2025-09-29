@@ -181,3 +181,19 @@ vim.keymap.set("n", "<left>", '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
+
+-- dev space
+local bookmarks = require("bookmarks")
+
+-- Define :Ob command
+vim.api.nvim_create_user_command("Ob", function(opts)
+  local args = vim.split(opts.args, " ")
+  if #args < 2 then
+    print("Usage: Ob <category> <tag>")
+    return
+  end
+  require("bookmarks").open(args[1], args[2])
+end, { nargs = "+", complete = "customlist,v:lua.Ob_complete" })
+
+-- Keymap: <leader>Ob
+vim.keymap.set("n", "<leader>Ob", ":Ob ", { desc = "Open bookmark", silent = false })
